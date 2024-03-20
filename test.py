@@ -25,49 +25,69 @@ class Sudoku:
     
     def printGrid(self):
         print(self.grid)
+        return self.grid
     
     def returnNumber(self,x,y):
         #Get the number thanks to the position x and y (y for the the line and x for the number position)
         return self.grid[y-1][x-1]
     
-    def returnRegion(self,x,y):
+    def returnRegion(self,row,column):
         region=[]
-        x = x //3
-        print(x)
-        for i in range(x,x+3):
-            for j in range(0,3):
-                print(i)
-                region.append(self.returnRow(i)[j])
         print(region)
-        
+        row -=1
+        column -=1
+        x= column // 3 * 3
+        y =row // 3 * 3
+        for i in range(3):
+            for j in range(3):
+                region.append(self.grid[y+i][x+j])
+        print(region)
+                
     
-    #method to verif the entities in a row
-    def verifNumber(self,row,column):
+    def verifNumber(self,row,column,number):
+        #method to verif the entities in a row
         for i in range(0,9):
-            if self.grid[row-1][i]==0:
-                print(0)
-            else :
-                print(self.grid[row-1][i])
-
-    #same method to verif but in column
+            if self.grid[row][i]==number:
+                print("faux")
+                return False
+        #same method to verif but in column
         for i in range(0,9):
-            if self.grid[i][column-1]==0:
-                print(0)
-            else :
-                print(self.grid[i][column-1])
-
-    #method to verif in region     
-        x0= column // 3 * 3
-        y0=row // 3 * 3
+            if self.grid[i][column]==number:
+                print("faux")
+                return False
+        #method to verif in region     
+        x= (column // 3) * 3
+        y= (row // 3) * 3
         for i in range(0,3):
             for j in range(0,3):
-                if self.grid[y0+i][x0+j]==0:
-                    print(0)
-                else :
-                    print(self.grid[y0+i][x0+j])  
+                if self.grid[y+i][x+j]==number:
+                    print("faux")
+                    return False 
+        print("vrai")         
+        return True
     
+    def verifBoard(self):
+        for row in range(9):
+            for column in range(9):
+                for number in range(1,10):
+                    self.verifNumber(row,column,f"{number}")
+                    if self.verifNumber(row,column,f"{number}") :
+                        print("vrai")
+                        return False
+                    else:
+                        print("nooo")  
+
+    def emptyCase(self):
+        self.empty_case=[]
+        for i in range(0,9):
+            for j in range(0,9):
+                if self.grid[i][j] == "0":
+                    self.empty_case.append((i+1, j+1))
+
+        print("empty cases : ")
+        for emplacement in self.empty_case:
+            print(emplacement)
 
     
 sudo=Sudoku()
-# sudo.returnRegion(4,1)
-sudo.verifNumber(1,1)
+sudo.verifBoard()
