@@ -13,10 +13,16 @@ for i in range(0, 9):
     tabl2.append(tabl1[0:9])
     del tabl1[0:9]
 
-for i in range(len(tabl2)):
-    for j in range(len(tabl2[i])):
-        if tabl2[i][j] == '_':
-            tabl2[i][j] = '1'
+emplacements_vides = []
 
-for row in tabl2:
-    print(row)
+for i in range(9):
+    for j in range(9):
+        if tabl2[i][j] == '_':
+            emplacements_vides.append((i, j))
+
+
+print("Emplacements vides:")
+for emplacement in emplacements_vides:
+    print(emplacement)
+
+
