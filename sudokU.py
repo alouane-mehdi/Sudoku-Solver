@@ -1,28 +1,55 @@
 import numpy as np
 
+# Define the method verifNumber
+def verifNumber(grid, row, column, number):
+    # Method to check entities in a row
+    for i in range(0, 9):
+        if grid[row][i] == number:
+            return False
+    # Method to check in the column
+    for i in range(0, 9):
+        if grid[i][column] == number:
+            return False
+    # Method to check in the region
+    x = (column // 3) * 3
+    y = (row // 3) * 3
+    for i in range(0, 3):
+        for j in range(0, 3):
+            if grid[y + i][x + j] == number:
+                return False
+    return True
+
+def solveSudoku(grid):
+    empty_spots = findEmptySpots(grid)
+    if not empty_spots:
+        return True  # Puzzle solved
+    row, col = empty_spots[0]  # Get the first empty spot
+    for num in range(1, 10):  # Try numbers from 1 to 9
+        if verifNumber(grid, row, col, str(num)):
+            grid[row][col] = str(num)
+            if solveSudoku(grid):
+                return True  # If it leads to a solution, return True
+            grid[row][col] = '_'  # If not a solution, backtrack
+    return False  # If no number leads to a solution, return False
+
+def findEmptySpots(grid):
+    empty_spots = []
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j] == '_':
+                empty_spots.append((i, j))
+    return empty_spots
+
+# Read the Sudoku grid from the file
 with open("t.txt") as my_file:
-    tabl = my_file.read()
+    content = my_file.readlines()
 
-tabl1 = []
-for i in tabl:
-    if i != '\n':
-        tabl1.append(i)
+grid = [list(line.strip()) for line in content]
 
-tabl2 = []
-for i in range(0, 9):
-    tabl2.append(tabl1[0:9])
-    del tabl1[0:9]
-
-emplacements_vides = []
-
-for i in range(9):
-    for j in range(9):
-        if tabl2[i][j] == '_':
-            emplacements_vides.append((i, j))
-
-
-print("Emplacements vides:")
-for emplacement in emplacements_vides:
-    print(emplacement)
-
-
+# Solve the Sudoku puzzle
+if solveSudoku(grid):
+    print("Sudoku puzzle solved:")
+    for row in grid:
+        print(' '.join(row))
+else:
+    print("No solution exists for the given Sudoku puzzle.")
