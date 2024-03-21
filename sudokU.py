@@ -19,6 +19,16 @@ def verifNumber(grid, row, column, number):
                 return False
     return True
 
+
+def findEmptySpots(grid):
+    empty_spots = []
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j] == '_':
+                empty_spots.append((i, j))
+    return empty_spots
+
+
 def solveSudoku(grid):
     empty_spots = findEmptySpots(grid)
     if not empty_spots:
@@ -32,24 +42,15 @@ def solveSudoku(grid):
             grid[row][col] = '_'  # If not a solution, backtrack
     return False  # If no number leads to a solution, return False
 
-def findEmptySpots(grid):
-    empty_spots = []
-    for i in range(9):
-        for j in range(9):
-            if grid[i][j] == '_':
-                empty_spots.append((i, j))
-    return empty_spots
+
 
 # Read the Sudoku grid from the file
-with open("t.txt") as my_file:
+with open("evilsudoku.txt") as my_file:
     content = my_file.readlines()
 
 grid = [list(line.strip()) for line in content]
 
 # Solve the Sudoku puzzle
 if solveSudoku(grid):
-    print("Sudoku puzzle solved:")
     for row in grid:
         print(' '.join(row))
-else:
-    print("No solution exists for the given Sudoku puzzle.")
