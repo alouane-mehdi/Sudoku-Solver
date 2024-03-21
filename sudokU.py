@@ -1,4 +1,4 @@
-import numpy as np
+
 
 # Define the method verifNumber
 def verifNumber(grid, row, column, number):
@@ -45,7 +45,7 @@ def solveSudoku(grid):
 
 
 # Read the Sudoku grid from the file
-with open("evilsudoku.txt") as my_file:
+with open("evilsudo.txt") as my_file:
     content = my_file.readlines()
 
 grid = [list(line.strip()) for line in content]
