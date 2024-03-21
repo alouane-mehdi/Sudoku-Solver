@@ -1,4 +1,12 @@
 def est_valide(grille, ligne, colonne, nombre):
+    # Vérifie si le nombre est valide dans la ligne
+    if nombre in grille[ligne]:
+        return False
+
+    # Vérifie si le nombre est valide dans la colonne
+    for i in range(9):
+        if grille[i][colonne] == nombre:
+            return False
 
     # Vérifie si le nombre est valide dans le bloc 3x3
     bloc_ligne = ligne // 3 * 3
@@ -6,9 +14,7 @@ def est_valide(grille, ligne, colonne, nombre):
     for i in range(3):
         for j in range(3):
             if grille[bloc_ligne + i][bloc_colonne + j] == nombre:
-                print(0)
-            else:
-                print(grille[bloc_ligne + i][bloc_colonne + j])
+                return False
 
     return True
 
@@ -46,7 +52,7 @@ grille = [
     [0, 9, 8, 0, 0, 0, 0, 6, 0],
     [8, 0, 0, 0, 6, 0, 0, 0, 3],
     [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
+    [7, 0, 0, 8, 2, 0, 0, 0, 6],
     [0, 6, 0, 0, 0, 0, 2, 8, 0],
     [0, 0, 0, 4, 1, 9, 0, 0, 5],
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
@@ -59,4 +65,3 @@ if resoudre_sudoku(grille):
     afficher_grille(grille)
 else:
     print("Aucune solution n'est possible.")
-est_valide(grille,1,3,0)

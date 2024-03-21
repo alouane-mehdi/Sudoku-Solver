@@ -66,28 +66,25 @@ class Sudoku:
         print("vrai")         
         return True
     
-    def verifBoard(self):
-        for row in range(9):
-            for column in range(9):
-                for number in range(1,10):
-                    self.verifNumber(row,column,f"{number}")
-                    if self.verifNumber(row,column,f"{number}") :
-                        print("vrai")
-                        return False
-                    else:
-                        print("nooo")  
+    # def verifBoard(self):  #gros n'importe quoi cette method
+    #     for row in range(9):
+    #         for column in range(9):
+    #             for number in range(1,10):
+    #                 self.verifNumber(row,column,f"{number}")
+    #                 if self.verifNumber(row,column,f"{number}") :
+    #                     print("vrai")
+    #                     return False
 
     def emptyCase(self):
         self.empty_case=[]
         for i in range(0,9):
             for j in range(0,9):
-                if self.grid[i][j] == "0":
+                if self.grid[i][j] == '0' :
                     self.empty_case.append((i+1, j+1))
-
         print("empty cases : ")
         for emplacement in self.empty_case:
             print(emplacement)
 
     
 sudo=Sudoku()
-sudo.verifBoard()
+sudo.emptyCase()
