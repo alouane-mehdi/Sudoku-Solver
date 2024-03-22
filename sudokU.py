@@ -1,5 +1,3 @@
-
-
 # Define the method verifNumber
 def verifNumber(grid, row, column, number):
     # Method to check entities in a row
