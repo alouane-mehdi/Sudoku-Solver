@@ -13,7 +13,7 @@ class Verif:
         for col in range(9):
             if self.grid[row][col] in num:
                 return False
-            if self.grid[row][col] != '0':
+            if self.grid[row][col] != '_':
                 num.add(self.grid[row][col])
         return True
 
@@ -25,7 +25,7 @@ class Verif:
         for row in range(9):
             if self.grid[row][column] in num:
                 return False
-            if self.grid[row][column] != '0':
+            if self.grid[row][column] != '_':
                 num.add(self.grid[row][column])
         return True
 
@@ -39,40 +39,45 @@ class Verif:
                 val = self.grid[square_row * 3 + row][square_column * 3 + column]
                 if val in num:
                     return False
-                if val != '0':
+                if val != '_':
                     num.add(val)
         return True
     
     def is_grid_full(self):
         for i in range(9):
             for j in range(9):
+                print(self.grid[i][j])
                 if self.grid[i][j] == '_' :
-                    print("no")
-                return False
+                    print("not full")
+                    return False
+        print("full")
+        return True
 
     def is_grid_valid(self):
         """
         Check if the entire grid is valid.
         """
 
-        if self.is_grid_full():
-            print("no")
+        if not self.is_grid_full():
+            print("not full")
             return False
         
         for i in range(9):
             if not self.is_row_valid(i) or not self.is_col_valid(i):
-                print("no")
+                print("not valid column or row")
                 return False
 
         for i in range(3):
             for j in range(3):
                 if not self.is_square_valid(i, j):
-                    print("no")
+                    print("not valid square")
                     return False
-
+        print("valid")
         return True
+    
+    def printGrid(self):
+        print(self.grid[0][8])
 
 verif=Verif()
 verif.is_grid_valid()
-
      
