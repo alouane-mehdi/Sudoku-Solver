@@ -17,17 +17,26 @@ def verifNumber(grid, row, column, number):
     return True
 
 def solveSudoku(grid):
+    # Iterating through all cells of the grid
     for row in range(9):
         for col in range(9):
-            if grid[row][col] == '_':  # Find an empty spot
-                for num in range(1, 10):  # Try numbers from 1 to 9
-                    if verifNumber(grid, row, col, str(num)):
-                        grid[row][col] = str(num)  # If valid, place the number
-                        if solveSudoku(grid):  # Recursively try to solve
+            # If the cell is empty
+            if grid[row][col] == '_':
+                # Try every possible number from 1 to 9
+                for num in range(1, 10):
+                    num = str(num)
+                    # If the number is valid in this position
+                    if verifNumber(grid, row, col, num):
+                        # Place the number and continue solving
+                        grid[row][col] = num
+                        if solveSudoku(grid):
                             return True
-                        grid[row][col] = '_'  # If not a solution, backtrack
-                return False  # If no number leads to a solution, return False
-    return True  # Puzzle solved
+                        # If it doesn't lead to a solution, backtrack by removing the number
+                        grid[row][col] = '_'
+                # If no number works, return False
+                return False
+    # If all cells are filled, puzzle is solved
+    return True
 
 # Read the Sudoku grid from the file
 with open("evilsudoku.txt") as my_file:
