@@ -25,14 +25,11 @@ def solveSudoku(grid):
                 # Try every possible number from 1 to 9
                 for num in range(1, 10):
                     num = str(num)
-                    # If the number is valid in this position
-                    if verifNumber(grid, row, col, num):
-                        # Place the number and continue solving
-                        grid[row][col] = num
-                        if solveSudoku(grid):
-                            return True
-                        # If it doesn't lead to a solution, backtrack by removing the number
-                        grid[row][col] = '_'
+                    # Place the number and continue solving
+                    grid[row][col] = num
+                    if solveSudoku(grid):
+                        return True
+                    grid[row][col] = '_'
                 # If no number works, return False
                 return False
     # If all cells are filled, puzzle is solved
