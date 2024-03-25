@@ -1,89 +1,94 @@
 import pygame
 import sys
 
-# Define the method verifNumber
-def verifNumber(grid, row, column, number):
-    # Method to check entities in a row
-    for i in range(0, 9):
-        if grid[row][i] == number:
-            return False
-    # Method to check in the column
-    for i in range(0, 9):
-        if grid[i][column] == number:
-            return False
-    # Method to check in the region
-    x = (column // 3) * 3
-    y = (row // 3) * 3
-    for i in range(0, 3):
-        for j in range(0, 3):
-            if grid[y + i][x + j] == number:
+class SudokuSolver:
+    def __init__(self):
+        # Initialize Pygame
+        pygame.init()
+
+        # Set up the display
+        self.WINDOW_SIZE = (500, 500)
+        self.screen = pygame.display.set_mode(self.WINDOW_SIZE)
+        pygame.display.set_caption("Sudoku Solver")
+
+        # Colors
+        self.WHITE = (255, 255, 255)
+        self.BLACK = (0, 0, 0)
+        self.BLUE = (0, 0, 255)
+
+        # Read the Sudoku grid from the file
+        with open("evilsudoku.txt") as my_file:
+            content = my_file.readlines()
+
+        self.grid = [list(line.strip()) for line in content]
+
+        # Solve the Sudoku puzzle
+        self.solveSudoku()
+
+    def verifNumber(self, row, column, number):
+        # Method to check entities in a row
+        for i in range(0, 9):
+            if self.grid[row][i] == number:
                 return False
-    return True
+        # Method to check in the column
+        for i in range(0, 9):
+            if self.grid[i][column] == number:
+                return False
+        # Method to check in the region
+        x = (column // 3) * 3
+        y = (row // 3) * 3
+        for i in range(0, 3):
+            for j in range(0, 3):
+                if self.grid[y + i][x + j] == number:
+                    return False
+        return True
 
-def findEmptySpots(grid):
-    empty_spots = []
-    for i in range(9):
-        for j in range(9):
-            if grid[i][j] == '_':
-                empty_spots.append((i, j))
-    return empty_spots
+    def findEmptySpot(self):
+        for i in range(9):
+            for j in range(9):
+                if self.grid[i][j] == '_':
+                    return i, j
+        return None
 
-def solveSudoku(grid):
-    empty_spots = findEmptySpots(grid)
-    if not empty_spots:
-        return True  # Puzzle solved
-    row, col = empty_spots[0]  # Get the first empty spot
-    for num in range(1, 10):  # Try numbers from 1 to 9
-        if verifNumber(grid, row, col, str(num)):
-            grid[row][col] = str(num)
-            if solveSudoku(grid):
-                return True  # If it leads to a solution, return True
-            grid[row][col] = '_'  # If not a solution, backtrack
-    return False  # If no number leads to a solution, return False
+    def solveSudoku(self):
+        empty_spot = self.findEmptySpot()
+        if not empty_spot:
+            return True  # Puzzle solved
+        row, col = empty_spot
+        for num in range(1, 10):  # Try numbers from 1 to 9
+            if self.verifNumber(row, col, str(num)):
+                self.grid[row][col] = str(num)
+                if self.solveSudoku():
+                    return True  # If it leads to a solution, return True
+                self.grid[row][col] = '_'  # If not a solution, backtrack
+        return False  # If no number leads to a solution, return False
 
-# Initialize Pygame
-pygame.init()
+    def run(self):
+        # Main loop
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
 
-# Set up the display
-WINDOW_SIZE = (500, 500)
-screen = pygame.display.set_mode(WINDOW_SIZE)
-pygame.display.set_caption("Sudoku Solver")
+            # Draw the Sudoku grid
+            cell_size = 50
+            for i in range(9):
+                for j in range(9):
+                    pygame.draw.rect(self.screen, self.WHITE, (j*cell_size, i*cell_size, cell_size, cell_size))
+                    pygame.draw.rect(self.screen, self.BLACK, (j*cell_size, i*cell_size, cell_size, cell_size), 1)
+                    if self.grid[i][j] != '_':
+                        font = pygame.font.SysFont(None, 40)
+                        text = font.render(self.grid[i][j], True, self.BLUE)
+                        self.screen.blit(text, (j*cell_size + 20, i*cell_size + 10))
 
-# Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-BLUE = (0, 0, 255)
+            pygame.display.update()
 
-# Read the Sudoku grid from the file
-with open("evilsudoku.txt") as my_file:
-    content = my_file.readlines()
+        # Quit Pygame
+        pygame.quit()
+        sys.exit()
 
-grid = [list(line.strip()) for line in content]
-
-# Solve the Sudoku puzzle
-solveSudoku(grid)
-
-# Main loop
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    # Draw the Sudoku grid
-    cell_size = 50
-    for i in range(9):
-        for j in range(9):
-            pygame.draw.rect(screen, WHITE, (j*cell_size, i*cell_size, cell_size, cell_size))
-            pygame.draw.rect(screen, BLACK, (j*cell_size, i*cell_size, cell_size, cell_size), 1)
-            if grid[i][j] != '_':
-                font = pygame.font.SysFont(None, 40)
-                text = font.render(grid[i][j], True, BLUE)
-                screen.blit(text, (j*cell_size + 20, i*cell_size + 10))
-
-    pygame.display.update()
-
-# Quit Pygame
-pygame.quit()
-sys.exit()
-
+# Run the SudokuSolver
+if __name__ == "__main__":
+    solver = SudokuSolver()
+    solver.run()
