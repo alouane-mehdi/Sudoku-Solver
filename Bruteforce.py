@@ -1,11 +1,8 @@
-from Verification import Verif
 import random
 
 class Sudoku:
     
     def __init__(self) :
-        with open("evilsudoku.txt", "r") as f:
-            row = f.readlines()
         with open("evilsudoku.txt") as my_file:
             liste = my_file.read()
 
@@ -140,15 +137,31 @@ class Sudoku:
         return False
 
 
-    def test(self):
+    def teste(self):
         empty_spot= []
         empty_spot.append(self.findEmptySpots())
-        while not self.is_grid_valid():
+        while self.is_grid_valid():
             for spots in empty_spot:
+                print("spots ",spots)
                 randomNumber=random.randint(1,9)
                 self.grid[empty_spot[0][spots][0]][empty_spot[0][spots][1]]= f"{randomNumber}"
                 print(random.randint(1,9))
                 print(self.grid)
+    
+    def test(self):
+        empty_spots = self.findEmptySpots()
+        print(empty_spots)
+        while empty_spots:
+            for spot in empty_spots:
+                row, col = spot
+                randomNumber = random.randint(1, 9)
+                self.grid[row][col] = str(randomNumber)
+            if not self.is_grid_valid():
+                self.test()
+            else:
+                break
+        for i in range(9):
+            print(self.grid[i])
         
 
     def printGrid(self):
