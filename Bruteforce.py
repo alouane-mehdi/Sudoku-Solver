@@ -1,47 +1,81 @@
-def verifNumber(grid, row, column, number):
-    # Method to check entities in a row
-    for i in range(0, 9):
-        if grid[row][i] == number:
-            return False
-    # Method to check in the column
-    for i in range(0, 9):
-        if grid[i][column] == number:
-            return False
-    # Method to check in the region
-    x = (column // 3) * 3
-    y = (row // 3) * 3
-    for i in range(0, 3):
-        for j in range(0, 3):
-            if grid[y + i][x + j] == number:
+import random
+
+class Bruteforce():
+    def __init__(self):
+        
+        # Read the Sudoku grid from the file
+        with open("evilsudoku.txt") as my_file:
+            # self.content = []
+            content = my_file.readlines()
+            # test = self.content.append(content)
+
+        self.grid = [list(line.strip()) for line in content]
+
+
+        # Solve the Sudoku puzzle
+        # if solveSudoku(grid):
+        #     for row in grid:
+        #         print(' '.join(row))
+
+
+        # Faire une fonction pour renvoyer les case vide dans une 'liste vide' et donc avoir les positions des case. La fonction return la liste
+        # Faire une autre fonction qui récupére la longueur de la liste pour générer un nombre équivalent de random.randint(1-9)
+
+    def verifGrid(self):
+
+        print (self.grid)
+
+        # Test on row
+
+        for row in self.grid:
+            # the 'set' enable to delete duplicate number, then the 'len' enable to count the len of the row
+            if not len(set(row)) == 9: # if its equal to 9, then alls the numbers are in the row
                 return False
-    return True
+        
+        # Test on column
 
-def solveSudoku(grid):
-    # Iterating through all cells of the grid
-    for row in range(9):
-        for col in range(9):
-            # If the cell is empty
-            if grid[row][col] == '_':
-                # Try every possible number from 1 to 9
-                for num in range(1, 10):
-                    num = str(num)
-                    # Place the number and continue solving
-                    grid[row][col] = num
-                    if solveSudoku(grid):
-                        return True
-                    grid[row][col] = '_'
-                # If no number works, return False
+        for i in range(9): # iterate on y
+            column = []
+            for j in range(9): # iterate on X
+                column.append(self.grid[j][i])
+            if not len(set(column)) == 9: # The same logic as for row, but for column
                 return False
-    # If all cells are filled, puzzle is solved
-    return True
+        
+        # Test on area 3x3
 
-# Read the Sudoku grid from the file
-with open("evilsudoku.txt") as my_file:
-    content = my_file.readlines()
+        for y0 in [0, 3, 6]: # it means that the loop will start on each value for Y [0, 3, 6]
+            for x0 in [0, 3, 6]: # it means that the loop will start on each value for X [0, 3, 6]
+                subgrid = []
+                for i in range(0,3): 
+                    for j in range(0,3):
+                        if self.grid[y0+i][x0+j] in subgrid: # if the number is already in the subgrid, return False
+                            return False
+                        subgrid.append(self.grid[y0+i][x0+j]) # else, add it to the list 'subgrid' and continue the loop
 
-grid = [list(line.strip()) for line in content]
+        return True # if all the rules are respected, return True
+    
+    def return_empty_spots(self):
+        empty_spots = []
+        for i in range(9): # iterate on y
+            for j in range(9): # iterate on x
+                if self.grid[i][j] == '_': # '_' is the symbol to means that a spot is empty
+                    empty_spots.append((i,j)) # add the coordonates of the spot in the list
+        return empty_spots # return the list
+    
+    def generate_random_number(self):
+        list_numbers = []
+        len_empty_spots = len(self.return_empty_spots()) # get the len of the list 'empty_spots' from the previous method 'return_empty_spots'
+        for i in range(len_empty_spots):
+            nbr_possibilites = random.randint(1,9) # generate a random number for every empty spots in the grid
+            list_number.append(nbr_possibilites) # add this number in the list 'list_possibilities'
+        print(list_possibilities)
+        # print (len_empty_spots)
+    
 
-# Solve the Sudoku puzzle
-if solveSudoku(grid):
-    for row in grid:
-        print(' '.join(row))
+
+        
+
+test = Bruteforce()
+print (test.verifGrid())
+# test.return_empty_spots()
+# test.generate_random_number()
