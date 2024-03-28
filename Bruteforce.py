@@ -1,8 +1,12 @@
 import random
 
-class Sudoku:
+class BruteForce:
     
     def __init__(self) :
+
+        bruteforce=BruteForce()
+        bruteforce.test()
+
         with open("evilsudoku.txt") as my_file:
             liste = my_file.read()
 
@@ -167,5 +171,3 @@ class Sudoku:
     def printGrid(self):
         print(self.grid)
 
-sudoku=Sudoku()
-sudoku.test()
