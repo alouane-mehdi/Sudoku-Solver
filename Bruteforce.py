@@ -1,17 +1,22 @@
 import random
+random.seed()
 
 class Bruteforce():
     def __init__(self):
         
         # Read the Sudoku grid from the file
-        with open("evilsudoku.txt") as my_file:
+        with open("evilsudoku.txt" ,"r") as my_file:
             # self.content = []
             content = my_file.readlines()
             # test = self.content.append(content)
 
         self.grid = [list(line.strip()) for line in content]
 
-
+        # self.gridClone = self.grid.copy()
+        self.gridClone = []
+        for row in self.grid:
+            self.gridClone.append(row.copy())
+        print(self.gridClone)
         # Solve the Sudoku puzzle
         # if solveSudoku(grid):
         #     for row in grid:
@@ -22,9 +27,7 @@ class Bruteforce():
         # Faire une autre fonction qui récupére la longueur de la liste pour générer un nombre équivalent de random.randint(1-9)
 
     def verifGrid(self):
-
-        print (self.grid)
-
+        # print(self.grid)
         # Test on row
 
         for row in self.grid:
@@ -52,6 +55,11 @@ class Bruteforce():
                             return False
                         subgrid.append(self.grid[y0+i][x0+j]) # else, add it to the list 'subgrid' and continue the loop
 
+        for i in range(9): # iterate on y
+            for j in range(9): # iterate on x
+                if self.grid[i][j] == '_': # '_' is the symbol to means that a spot is empty
+                    return False
+
         return True # if all the rules are respected, return True
     
     def return_empty_spots(self):
@@ -66,16 +74,42 @@ class Bruteforce():
         list_numbers = []
         len_empty_spots = len(self.return_empty_spots()) # get the len of the list 'empty_spots' from the previous method 'return_empty_spots'
         for i in range(len_empty_spots):
+            
             nbr_possibilites = random.randint(1,9) # generate a random number for every empty spots in the grid
-            list_number.append(nbr_possibilites) # add this number in the list 'list_possibilities'
-        print(list_possibilities)
-        # print (len_empty_spots)
+            list_numbers.append(nbr_possibilites) # add this number in the list 'list_possibilities'
+        return list_numbers
+    
+    def solve_sudoku(self):
+        
+        while self.verifGrid() == False:
+            self.grid = []
+            for row in self.gridClone:
+                self.grid.append(row.copy())
+            # self.grid = self.gridClone.copy()
+            # print(self.grid)
+            random_numbers = self.generate_random_number()
+            # print(random_numbers)
+            empty_spots = self.return_empty_spots()
+            for number, spot in enumerate(empty_spots):
+            
+                self.grid[spot[0]][spot[1]] = str(random_numbers[number])  
+            
+
+            for row in self.grid:
+                print(' '.join(row))
+            print()
+
+            
+            
+
+                
+                        
+grid = [[],[]]
+
     
 
-
-        
-
 test = Bruteforce()
-print (test.verifGrid())
+# print (test.verifGrid())
 # test.return_empty_spots()
-# test.generate_random_number()
+# print (test.generate_random_number())
+test.solve_sudoku()
