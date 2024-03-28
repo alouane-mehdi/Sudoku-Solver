@@ -49,6 +49,6 @@ class Backtracking:
 
 
 # Usage:
-solver = Backtracking("sudoku3.txt")
+solver = Backtracking("sudoku2.txt")
 solver.solveSudoku()
 solver.print_grid()

@@ -2,28 +2,13 @@ import random
 
 class BruteForce:
     
-    def __init__(self) :
+    def __init__(self,file_path) :
+        self.grid = self.read_grid_from_file(file_path)
 
-        bruteforce=BruteForce()
-        bruteforce.test()
-
-        with open("evilsudoku.txt") as my_file:
-            liste = my_file.read()
-
-            liste1 = []
-            for i in liste:
-                if i != '\n':
-                    liste1.append(i)
-
-            self.grid = []
-            for i in range(0, 9):
-                self.grid.append(liste1[0:9])
-                del liste1[0:9]
-
-            for i in range(len(self.grid)):
-                for j in range(len(self.grid[i])):
-                    if self.grid[i][j] == '_':
-                        self.grid[i][j] = '0'
+    def read_grid_from_file(self, file_path):
+        with open(file_path) as my_file:
+            content = my_file.readlines()
+        return [list(line.strip()) for line in content]
 
     def is_row_valid(self, row):
         """
@@ -92,66 +77,14 @@ class BruteForce:
         print(self.grid)
         return True
     
-    def verifNumber(self,row, column, number):
-        # Method to check entities in a row
-        for i in range(0, 9):
-            if self.grid[row][i] == number:
-                return False
-        # Method to check in the column
-        for i in range(0, 9):
-            if self.grid[i][column] == number:
-                return False
-        # Method to check in the region
-        x = (column // 3) * 3
-        y = (row // 3) * 3
-        for i in range(0, 3):
-            for j in range(0, 3):
-                if self.grid[y + i][x + j] == number:
-                    return False
-        return True
-    
     def findEmptySpots(self):
         empty_spots = []
         for i in range(9):
             for j in range(9):
-                if self.grid[i][j] == '0':
+                if self.grid[i][j] == '_':
                     empty_spots.append((i, j))
         return empty_spots
-    
-    def solveSudokuTest(self):
-        
-        empty_spots = self.findEmptySpots()
-        if not empty_spots:
-            # Si aucune case vide n'est trouvée, le sudoku est déjà résolu
-            return True
-
-        # Sélectionnez la première case vide
-        row, col = empty_spots[0]
-
-        # Pour chaque chiffre de 1 à 9, essayez de le placer dans la case vide
-        for num in range(1, 10):
-            self.grid[row][col] = num
-            if self.solveSudokuTest():
-                print(self.grid)
-                return True
-            # Si la solution n'est pas possible, réinitialisez la case et essayez le prochain nombre
-            self.grid[row][col] = '0'
-
-        # Si aucun nombre ne fonctionne pour cette case, le sudoku est insoluble à partir de ce point
-        return False
-
-
-    def teste(self):
-        empty_spot= []
-        empty_spot.append(self.findEmptySpots())
-        while self.is_grid_valid():
-            for spots in empty_spot:
-                print("spots ",spots)
-                randomNumber=random.randint(1,9)
-                self.grid[empty_spot[0][spots][0]][empty_spot[0][spots][1]]= f"{randomNumber}"
-                print(random.randint(1,9))
-                print(self.grid)
-    
+      
     def test(self):
         empty_spots = self.findEmptySpots()
         print(empty_spots)
@@ -171,3 +104,5 @@ class BruteForce:
     def printGrid(self):
         print(self.grid)
 
+bruteforce=BruteForce("evilsudoku.txt")
+bruteforce.test()
