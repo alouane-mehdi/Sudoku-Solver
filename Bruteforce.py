@@ -1,11 +1,17 @@
 import random
+import time
+
+start_time = time.time()
+
+
+
 random.seed()
 
 class Bruteforce():
-    def __init__(self):
+    def __init__(self ,file_path):
         
         # Read the Sudoku grid from the file
-        with open("evilsudoku.txt" ,"r") as my_file:
+        with open(file_path ,"r") as my_file:
             # self.content = []
             content = my_file.readlines()
             # test = self.content.append(content)
@@ -16,18 +22,8 @@ class Bruteforce():
         self.gridClone = []
         for row in self.grid:
             self.gridClone.append(row.copy())
-        print(self.gridClone)
-        # Solve the Sudoku puzzle
-        # if solveSudoku(grid):
-        #     for row in grid:
-        #         print(' '.join(row))
-
-
-        # Faire une fonction pour renvoyer les case vide dans une 'liste vide' et donc avoir les positions des case. La fonction return la liste
-        # Faire une autre fonction qui récupére la longueur de la liste pour générer un nombre équivalent de random.randint(1-9)
 
     def verifGrid(self):
-        # print(self.grid)
         # Test on row
 
         for row in self.grid:
@@ -81,35 +77,30 @@ class Bruteforce():
     
     def solve_sudoku(self):
         
-        while self.verifGrid() == False:
-            self.grid = []
-            for row in self.gridClone:
-                self.grid.append(row.copy())
-            # self.grid = self.gridClone.copy()
-            # print(self.grid)
-            random_numbers = self.generate_random_number()
-            # print(random_numbers)
-            empty_spots = self.return_empty_spots()
-            for number, spot in enumerate(empty_spots):
+        while self.verifGrid() == False: 
+            self.grid = [] # Reinitialize the list 
+            for row in self.gridClone: # For every list in the initial sudoku
+                self.grid.append(row.copy()) # add every list to self.grid to rebuild the sudoku
+            random_numbers = self.generate_random_number() # generate a random  number
+            empty_spots = self.return_empty_spots() # return the empty spots in the sudoku
+            for index, spot in enumerate(empty_spots): # enumerate on the values in empty spots and give an index to them
             
-                self.grid[spot[0]][spot[1]] = str(random_numbers[number])  
+                self.grid[spot[0]][spot[1]] = str(random_numbers[index])  # take the empty spots and try a random numbers till it find the solution 
             
 
             for row in self.grid:
                 print(' '.join(row))
             print()
 
-            
-            
-
-                
-                        
-grid = [[],[]]
 
     
 
-test = Bruteforce()
+test = Bruteforce("evilsudoku.txt")
 # print (test.verifGrid())
 # test.return_empty_spots()
 # print (test.generate_random_number())
 test.solve_sudoku()
+
+end_time = time.time()
+execution_time = end_time - start_time
+print("Durée d'exécution:", execution_time, "secondes")
