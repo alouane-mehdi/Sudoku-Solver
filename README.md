@@ -6,9 +6,9 @@ vérifie si la grille complète ne viole aucune regle du jeu . Si elle n'en viol
 testés jusqu'a que le sudoku soit compléter. (pour 5 cases manquante ça prends aproximativement 50secondes mais pour 6 cases manquante ça en prends 6 minutes et 10 secondes) 
 Donc la Force Brute n'est pas la plus efficace (sauf si vous aimez attendre ) et le Backtracking est la plus optimal.
 
-| Force Brute|                                                                      Backtracking|
-|------------                                                                       |------------|
-|Plus facile à comprendre et implémenter                                            |Plus complexe à comprendre et implémenter            
-|Explore toutes les possibilités, assure donc de trouve un résulat                  |Pas de garantit de trouver une solution            
-|Mais presque inneficace pour les problèmes avec beaucoup de combinaison            |Efficace sur les problèmes de taille raisonable            
-|Utilise moins d'espace mémoire,pas besoin de stocker les configurations précédentes|Utilise plus d'espace mémoire car doit stocker les combinaisons précédentes          
+| Force Brute|                                                                                Backtracking
+|------------                                                                                 |------------|
+|Plus facile à comprendre et implémenter                                                      |Plus complexe à comprendre et implémenter            
+|Explore toutes les possibilités, assure donc de trouve un résulat                            |Pas de garantit de trouver une solution            
+|Mais presque inefficace pour les problèmes avec beaucoup de combinaison possibles            |Efficace sur les problèmes de taille raisonable            
+|Utilise moins d'espace mémoire,pas besoin de stocker les configurations précédentes          |Utilise plus d'espace mémoire car doit stocker les combinaisons précédentes          
