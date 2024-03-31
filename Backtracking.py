@@ -30,7 +30,7 @@ class Backtracking:
                     empty_spots.append((i, j))
         return empty_spots
 
-    def solveSudoku(self):
+    def test(self):
         empty_spots = self.findEmptySpots()
         if not empty_spots:
             return True
@@ -38,7 +38,7 @@ class Backtracking:
         for num in range(1, 10):
             if self.verifNumber(row, col, str(num)):
                 self.grid[row][col] = str(num)
-                if self.solveSudoku():
+                if self.test():
                     return True
                 self.grid[row][col] = '_'
         return False
@@ -50,5 +50,5 @@ class Backtracking:
 
 # Usage:
 solver = Backtracking("sudoku2.txt")
-solver.solveSudoku()
+solver.test()
 solver.print_grid()

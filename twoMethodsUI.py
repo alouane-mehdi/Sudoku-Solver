@@ -55,13 +55,12 @@ class SudokuSolverGUI:
             messagebox.showerror("Error", "Invalid solver method selected.")
             return
         
-        solver.solveSudoku()
+        solver.test()
 
         self.draw_grid()
         self.draw_numbers(solver.grid)
 
         messagebox.showinfo("Sudoku Solved", "Sudoku solved successfully.")
-        
 
 def main():
     root = tk.Tk()
@@ -71,3 +70,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
