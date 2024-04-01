@@ -1,17 +1,18 @@
 import tkinter as tk
 from tkinter import messagebox
-from Bruteforce import BruteForce
+from Bruteforce import Bruteforce
 from Backtracking import Backtracking
 
 class SudokuSolverGUI:
-    def __init__(self, master, file_path):
+    def __init__(self, master, file_path_bruteforce,file_path_backtracking):
         self.master = master
         self.master.title("Sudoku Solver")
 
         self.frame = tk.Frame(self.master)
         self.frame.pack()
 
-        self.file_path = file_path
+        self.file_path_bruteforce = file_path_bruteforce
+        self.file_path_backtracking = file_path_backtracking
 
         self.method_var = tk.StringVar()
         self.method_var.set("Brute Force")
@@ -28,6 +29,10 @@ class SudokuSolverGUI:
         self.canvas = tk.Canvas(self.master, width=360, height=360)
         self.canvas.pack()
 
+        self.bruteforce = False
+        self.backtracking = False
+
+
     def draw_grid(self):
         self.canvas.delete("all")
         for i in range(10):
@@ -43,17 +48,28 @@ class SudokuSolverGUI:
                     self.canvas.create_text(20 + 40 * j, 20 + 40 * i, text=grid[i][j], font=("Arial", 20), tags="numbers")
 
     def solve(self):
-        if not self.file_path:
+        if not self.file_path_bruteforce:
             messagebox.showerror("Error", "Sudoku file path not specified.")
             return
         
         if self.method_var.get() == "Brute Force":
-            solver = BruteForce(self.file_path)
+            self.bruteforce = True
+            
+            self.backtracking = False
+            
         elif self.method_var.get() == "Backtracking":
-            solver = Backtracking(self.file_path)
+            self.backtracking = True
+            self.bruteforce = False
+            
         else:
             messagebox.showerror("Error", "Invalid solver method selected.")
             return
+        
+        if self.bruteforce:
+            solver = Bruteforce(self.file_path_bruteforce)
+        elif self.backtracking:
+            solver = Backtracking(self.file_path_backtracking)
+        
         
         solver.test()
 
@@ -64,8 +80,9 @@ class SudokuSolverGUI:
 
 def main():
     root = tk.Tk()
-    file_path = "evilsudoku.txt"  # Spécifiez le chemin du fichier ici
-    app = SudokuSolverGUI(root, file_path)
+    file_path_bruteforce = "testsudoku.txt"  # Spécifiez le chemin du fichier ici
+    file_path_backtracking = "sudoku2.txt"
+    app = SudokuSolverGUI(root, file_path_bruteforce , file_path_backtracking)
     root.mainloop()
 
 if __name__ == "__main__":

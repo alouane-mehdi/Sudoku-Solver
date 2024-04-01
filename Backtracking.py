@@ -50,5 +50,3 @@ class Backtracking:
 
 # Usage:
 solver = Backtracking("sudoku2.txt")
-solver.test()
-solver.print_grid()

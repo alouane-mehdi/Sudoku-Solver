@@ -75,7 +75,7 @@ class Bruteforce():
             list_numbers.append(nbr_possibilites) # add this number in the list 'list_possibilities'
         return list_numbers
     
-    def solve_sudoku(self):
+    def test(self):
         
         while self.verifGrid() == False: 
             self.grid = [] # Reinitialize the list 
@@ -99,7 +99,7 @@ test = Bruteforce("testsudoku.txt")
 # print (test.verifGrid())
 # test.return_empty_spots()
 # print (test.generate_random_number())
-test.solve_sudoku()
+# test.solve_sudoku()
 
 end_time = time.time()
 execution_time = end_time - start_time
