@@ -111,7 +111,7 @@ screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Résolveur de Sudoku")
 
 # Initialisation de la grille
-test = Bruteforce("evilsudoku.txt")
+test = Bruteforce("testsudoku.txt")
 test.solve_sudoku()
 
 # Calcul du temps d'exécution

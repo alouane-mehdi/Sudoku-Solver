@@ -95,7 +95,7 @@ class Bruteforce():
 
     
 
-test = Bruteforce("evilsudoku.txt")
+test = Bruteforce("testsudoku.txt")
 # print (test.verifGrid())
 # test.return_empty_spots()
 # print (test.generate_random_number())
