@@ -1,6 +1,5 @@
 import pygame
 import sys
-import time
 
 class SudokuSolver:
     def __init__(self):
@@ -62,7 +61,7 @@ class SudokuSolver:
                 if self.solveSudoku():
                     return True  # If it leads to a solution, return True
                 self.grid[row][col] = '_'  # If not a solution, backtrack
-                self.draw_grid()  # Ajout de cette ligne pour afficher chaque étape du backtracking
+                self.draw_grid()  # Adding this line to display each step of backtracking
         return False  # If no number leads to a solution, return False
 
     def run(self):
@@ -73,7 +72,7 @@ class SudokuSolver:
                 if event.type == pygame.QUIT:
                     running = False
 
-            self.draw_grid()  # Mettez à jour l'affichage à chaque itération
+            self.draw_grid()  # Update display on each iteration
 
         # Quit Pygame
         pygame.quit()

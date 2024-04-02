@@ -71,7 +71,7 @@ class SudokuSolverGUI:
             solver = Backtracking(self.file_path_backtracking)
         
         
-        solver.test()
+        solver.solve_sudoku()
 
         self.draw_grid()
         self.draw_numbers(solver.grid)

@@ -2,9 +2,6 @@ import random
 import time
 
 start_time = time.time()
-
-
-
 random.seed()
 
 class Bruteforce():
@@ -75,7 +72,7 @@ class Bruteforce():
             list_numbers.append(nbr_possibilites) # add this number in the list 'list_possibilities'
         return list_numbers
     
-    def test(self):
+    def solve_sudoku(self):
         
         while self.verifGrid() == False: 
             self.grid = [] # Reinitialize the list 
@@ -95,11 +92,11 @@ class Bruteforce():
 
     
 
-test = Bruteforce("testsudoku.txt")
+bf = Bruteforce("testsudoku.txt")
 # print (test.verifGrid())
 # test.return_empty_spots()
 # print (test.generate_random_number())
-# test.solve_sudoku()
+bf.solve_sudoku()
 
 end_time = time.time()
 execution_time = end_time - start_time
