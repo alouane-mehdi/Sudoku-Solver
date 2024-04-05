@@ -12,3 +12,11 @@ Donc la Force Brute n'est pas la plus efficace (sauf si vous aimez attendre ) et
 |Explore toutes les possibilités, assure donc de trouve un résulat                            |Plus rapide          
 |Mais presque inefficace pour les problèmes avec beaucoup de combinaison possibles            |Efficace sur les sudoku à plusieurs cases manquantes 
 |Utilise moins d'espace mémoire,pas besoin de stocker les configurations précédentes          |Utilise plus d'espace mémoire car doit stocker les combinaisons précédentes          
+Calculs de complexité:
+
+- Complexité temporelle :  Il s'agit de mesurer le temps nécessaire à l'exécution de l'algorithme en fonction de la taille de l'entrée(notée grand 0)
+- Complexité spatiale ; Il s'agit de mesurer la consomation de mémoire de l'algorithme toujours en fonction de la taille de l'entrée (notée grand 0)
+
+  Pour la force brute, la complexité temporelle est exponentielle et varie en fonction du nombre de cases vides (soit souvent longue et imprévisible). La complexité spatiale est relativement faible puisque l'algorithme ne stocke pas une grande quantité d'information en mémoire, mais principalement la grille de sudoku et la méthode vérifGrid.
+
+  Pour le BackTracking, la complexité temporelle est souvent plus courte que le bruteforce mais peut s'allonger si l'algorithme emprunte de nombreuse fois les mauvais chemin. La complexité spatiale est cependant plus importante puisque l'algorithme doit stocker les chemins empruntés.
